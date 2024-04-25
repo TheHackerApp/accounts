@@ -2,11 +2,12 @@ import { relative } from 'node:path';
 
 const buildEslintCommand = (filenames) => {
   const cwd = process.cwd();
-  const args = filenames.map((f) => relative(cwd, f)).join(' --file ');
-  return `next lint --fix --file ${args}`;
-}
+  const args = filenames.map((f) => '--file ' + relative(cwd, f)).join(' ');
+  return `next lint --fix ${args}`;
+};
 
 const handlers = {
+  '*': 'prettier --write',
   '*.{js,ts,tsx}': [buildEslintCommand],
 };
 
