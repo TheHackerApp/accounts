@@ -26,10 +26,16 @@ const config: CodegenConfig = {
       presetConfig: {
         baseTypesPath: '~@/graphql/types',
       },
-      plugins: ['typescript-operations', './dev/persisted-queries.cjs', { add: { content: '/* eslint-disable */' } }],
+      plugins: [
+        'typescript-operations',
+        './dev/react-apollo.cjs',
+        './dev/persisted-queries.cjs',
+        { add: { content: '/* eslint-disable */' } },
+      ],
       config: {
         addOperationExport: true,
         documentNodeImport: '@/graphql/document-node#DocumentNode',
+        documentMode: 'documentNode',
       },
       documentTransforms: [
         {
