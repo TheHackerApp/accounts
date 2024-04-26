@@ -8,7 +8,7 @@ const buildEslintCommand = (filenames) => {
 
 const handlers = {
   '*': 'prettier --write',
-  '*.{js,ts,tsx}': [buildEslintCommand],
+  '*.{js,cjs,mjs,ts,tsx}': [buildEslintCommand],
 };
 
 export default handlers;
