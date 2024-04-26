@@ -1,4 +1,5 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
+import type { GraphQLConfig } from 'graphql-config';
 
 import 'dotenv/config';
 
@@ -7,9 +8,7 @@ import { typenameTransformer } from './src/graphql/transform';
 const SCHEMA_SOURCE = process.env.GRAPHQL_SCHEMA_SOURCE;
 if (SCHEMA_SOURCE === undefined) throw new Error('Unknown schema source. Is GRAPHQL_SCHEMA_SOURCE set?');
 
-const config: CodegenConfig = {
-  schema: SCHEMA_SOURCE,
-  documents: ['src/app/**/*.graphql'],
+const codegen: CodegenConfig = {
   config: {
     useTypeImports: true,
   },
@@ -50,6 +49,13 @@ const config: CodegenConfig = {
     },
   },
   ignoreNoDocuments: true,
+};
+
+const config: GraphQLConfig = {
+  schema: SCHEMA_SOURCE,
+  documents: ['src/app/**/*.graphql'],
+  // @ts-ignore
+  extensions: { codegen },
 };
 
 export default config;
