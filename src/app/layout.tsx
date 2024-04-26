@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 
+import { ApolloClientProvider } from '@/graphql';
+
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -18,7 +20,9 @@ interface Props {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ApolloClientProvider>{children}</ApolloClientProvider>
+      </body>
     </html>
   );
 }
