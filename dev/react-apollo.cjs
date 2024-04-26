@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { isComplexPluginOutput } = require('@graphql-codegen/plugin-helpers');
 const { plugin: typescriptReactApolloPlugin } = require('@graphql-codegen/typescript-react-apollo');
 
@@ -9,6 +10,7 @@ const { plugin: typescriptReactApolloPlugin } = require('@graphql-codegen/typesc
  */
 async function generateReactApolloHelpers(schema, rawDocuments, config) {
   const result = typescriptReactApolloPlugin(schema, rawDocuments, config);
+  // eslint-disable-next-line no-undef
   if (result instanceof Promise) return await result;
   else return result;
 }

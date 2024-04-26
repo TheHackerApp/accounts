@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { createHash } = require('node:crypto');
 
 const { sortTopLevelDefinitions } = require('@apollo/persisted-query-lists');
@@ -13,6 +14,7 @@ const { print } = require('graphql');
  */
 async function generateTypedDocument(schema, rawDocuments, config) {
   const result = typedDocumentNodePlugin(schema, rawDocuments, config);
+  // eslint-disable-next-line no-undef
   if (result instanceof Promise) return await result;
   else return result;
 }

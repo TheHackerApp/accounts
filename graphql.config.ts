@@ -54,7 +54,7 @@ const codegen: CodegenConfig = {
 const config: GraphQLConfig = {
   schema: SCHEMA_SOURCE,
   documents: ['src/app/**/*.graphql'],
-  // @ts-ignore
+  // @ts-expect-error 2353
   extensions: { codegen },
 };
 
