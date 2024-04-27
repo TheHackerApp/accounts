@@ -24,6 +24,8 @@ async function proxyRequest(request: Request): Promise<Response> {
     method: request.method,
     body: request.body,
     headers,
+    // @ts-expect-error duplex is needed to make proxying response bodies work, but it is not part of the type
+    duplex: 'half',
   });
 
   const responseHeaders = new Headers(response.headers);

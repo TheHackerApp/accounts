@@ -154,4 +154,4 @@ next-env.d.ts
 
 ### Project Files ###
 persisted-query-manifest.json
-**/*.generated.ts
+**/*.graphql.ts

@@ -27,6 +27,7 @@ const codegen: CodegenConfig = {
       preset: 'near-operation-file',
       presetConfig: {
         baseTypesPath: '~@/graphql/types',
+        extension: '.graphql.ts',
       },
       plugins: [
         'typescript-operations',
