@@ -11,7 +11,7 @@ yarn.lock
 .eslintignore
 .prettierignore
 .gitignore
-.env.example
+.env.*
 .env
 
 src/graphql/types.ts

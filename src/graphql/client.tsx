@@ -14,7 +14,7 @@ function makeClient(): NextSSRApolloClient<NormalizedCacheObject> {
   const isSsr = typeof window === 'undefined';
 
   const http = new HttpLink({
-    uri: '', // TODO: specify this
+    uri: isSsr ? process.env.API_UPSTREAM : process.env.NEXT_PUBLIC_API_ROUTE,
   });
   const retry = new RetryLink({
     delay: {
