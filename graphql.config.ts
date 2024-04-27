@@ -20,6 +20,9 @@ const codegen: CodegenConfig = {
         nonOptionalTypename: true,
       },
     },
+    'src/graphql/persisted-query-manifest.json': {
+      plugins: ['./dev/persisted-query-manifest.cjs'],
+    },
     'src/': {
       preset: 'near-operation-file',
       presetConfig: {

@@ -1,6 +1,7 @@
 'use client';
 
 import { ApolloLink, HttpLink, NormalizedCacheObject } from '@apollo/client';
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
 import { RetryLink } from '@apollo/client/link/retry';
 import {
   ApolloNextAppProvider,
@@ -8,6 +9,7 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr';
+import { generatePersistedQueryIdsFromManifest } from '@apollo/persisted-query-lists';
 import { PropsWithChildren, ReactNode } from 'react';
 
 function makeClient(): NextSSRApolloClient<NormalizedCacheObject> {
@@ -23,7 +25,12 @@ function makeClient(): NextSSRApolloClient<NormalizedCacheObject> {
     },
     attempts: { max: 3 },
   });
-  const link = ApolloLink.from([retry, http]);
+  const persistedQueries = createPersistedQueryLink(
+    generatePersistedQueryIdsFromManifest({
+      loadManifest: () => import('./persisted-query-manifest.json'),
+    }),
+  );
+  const link = ApolloLink.from([persistedQueries, retry, http]);
 
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
