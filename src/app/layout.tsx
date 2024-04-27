@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
 import { ReactNode } from 'react';
 
 import NextUIProvider from '@/components/NextUIProvider';
@@ -21,10 +22,12 @@ interface Props {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn(inter.className, 'h-dvh')}>
         <ApolloClientProvider>
-          <NextUIProvider>{children}</NextUIProvider>
+          <NextUIProvider>
+            <ThemeProvider attribute="class">{children}</ThemeProvider>
+          </NextUIProvider>
         </ApolloClientProvider>
       </body>
     </html>
