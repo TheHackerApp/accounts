@@ -13,5 +13,6 @@ yarn.lock
 .gitignore
 .env.*
 .env
+.npmrc
 
 src/graphql/types.ts

@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 
+import NextUIProvider from '@/components/NextUIProvider';
 import { ApolloClientProvider } from '@/graphql';
+import { cn } from '@/utils';
 
-import './globals.css';
+import './tailwind.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,8 +22,10 @@ interface Props {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ApolloClientProvider>{children}</ApolloClientProvider>
+      <body className={cn(inter.className, 'h-dvh')}>
+        <ApolloClientProvider>
+          <NextUIProvider>{children}</NextUIProvider>
+        </ApolloClientProvider>
       </body>
     </html>
   );
