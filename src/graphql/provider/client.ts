@@ -77,7 +77,7 @@ export function makeSsrClient({
   });
 
   const ssr = new SSRMultipartLink({ stripDefer: true });
-  const http = new HttpLink({ uri: process.env.API_UPSTREAM, fetchOptions: { cache: 'no-store' } });
+  const http = new HttpLink({ uri: process.env.API_UPSTREAM + '/graphql', fetchOptions: { cache: 'no-store' } });
   const link = ApolloLink.from([authentication, ssr, defaultLinkMiddleware(), http]);
 
   return new NextSSRApolloClient({
