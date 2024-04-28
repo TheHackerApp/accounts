@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 
 import NextUIProvider from '@/components/NextUIProvider';
 import { ApolloClientProvider } from '@/graphql';
-import { cn } from '@/utils';
+import { cn } from '@/lib/styles';
 
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import './tailwind.css';

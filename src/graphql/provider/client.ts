@@ -10,7 +10,7 @@ import {
 } from '@apollo/experimental-nextjs-app-support/ssr';
 import { generatePersistedQueryIdsFromManifest } from '@apollo/persisted-query-lists';
 
-import { uncloakSsrOnly } from '@/utils/ssr-secret';
+import { uncloakSsrOnly } from '@/lib/ssr-secret';
 
 /**
  * Create the default set of links used, regardless of client type

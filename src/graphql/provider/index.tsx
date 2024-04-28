@@ -1,7 +1,7 @@
 import { cookies, headers } from 'next/headers';
 import { PropsWithChildren, ReactNode } from 'react';
 
-import { cloakSsrOnly } from '@/utils/ssr-secret';
+import { cloakSsrOnly } from '@/lib/ssr-secret';
 
 import { ClientSideProvider } from './impl';
 
