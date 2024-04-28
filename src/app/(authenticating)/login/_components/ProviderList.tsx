@@ -10,7 +10,7 @@ const ProviderList = () => {
   return (
     <div className="flex flex-col gap-4 py-4">
       {providers.map((provider) => (
-        <LaunchLink key={provider.slug} name={provider.name} logo={provider.logo} />
+        <LaunchLink key={provider.slug} {...provider} />
       ))}
     </div>
   );
