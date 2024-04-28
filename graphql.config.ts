@@ -32,12 +32,12 @@ const codegen: CodegenConfig = {
       plugins: [
         'typescript-operations',
         './dev/react-apollo.cjs',
-        './dev/persisted-queries.cjs',
+        'typed-document-node',
         { add: { content: '/* eslint-disable */' } },
       ],
       config: {
         addOperationExport: true,
-        documentNodeImport: '@/graphql/document-node#DocumentNode',
+        documentNodeImport: '@graphql-typed-document-node/core#TypedDocumentNode',
         documentMode: 'documentNode',
       },
       documentTransforms: [
