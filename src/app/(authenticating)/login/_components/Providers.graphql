@@ -1,0 +1,7 @@
+query Providers {
+  providers {
+    slug
+    logo
+    name
+  }
+}
