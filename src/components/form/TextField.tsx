@@ -1,6 +1,7 @@
 import type { InputProps } from '@nextui-org/input';
 import { Input } from '@nextui-org/react';
 import { ReactNode } from 'react';
+import { useFormStatus } from 'react-dom';
 import { useController } from 'react-hook-form';
 import type { Control, ControllerRenderProps, FieldPathByValue, FieldValues } from 'react-hook-form';
 
@@ -22,9 +23,18 @@ const TextField = <TFieldValues extends FieldValues, TPath extends FieldPathByVa
     field,
     fieldState: { invalid, error },
   } = useController<TFieldValues, TPath>({ name, control, rules: { required } });
+  const { pending } = useFormStatus();
 
   return (
-    <Input type="text" {...rest} isRequired={required} isInvalid={invalid} errorMessage={error?.message} {...field} />
+    <Input
+      type="text"
+      {...rest}
+      isDisabled={pending}
+      isRequired={required}
+      isInvalid={invalid}
+      errorMessage={error?.message}
+      {...field}
+    />
   );
 };
 
