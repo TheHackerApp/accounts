@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  redirects: async () => [
+    {
+      source: '/settings',
+      destination: '/settings/general',
+      permanent: false,
+    },
+  ],
   webpack: (config) => {
     const extensionAlias = config.resolve.extensionAlias ?? {};
     extensionAlias['.graphql'] = ['.graphql.ts'];
