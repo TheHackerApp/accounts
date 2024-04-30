@@ -29,16 +29,21 @@ export async function middleware(request: NextRequest): Promise<NextResponse | u
     return internalServerError();
   }
 
+  const userState = context.user.type;
   switch (request.nextUrl.pathname) {
     case '/login':
-      if (context.user.type === 'authenticated') return temporaryRedirect('/', request.url);
+      if (userState === 'authenticated') return temporaryRedirect('/', request.url);
+      if (userState === 'registration-needed') return temporaryRedirect('/complete-profile', request.url);
       break;
 
-    // TODO: handle registration-needed users
+    case '/complete-profile':
+      if (userState === 'unauthenticated' || userState === 'oauth') return temporaryRedirect('/login', request.url);
+      if (userState === 'authenticated') return temporaryRedirect('/', request.url);
+      break;
 
     default:
-      if (context.user.type === 'unauthenticated' || context.user.type === 'oauth')
-        return temporaryRedirect('/login', request.url);
+      if (userState === 'unauthenticated' || userState === 'oauth') return temporaryRedirect('/login', request.url);
+      if (userState === 'registration-needed') return temporaryRedirect('/complete-profile', request.url);
       break;
   }
 

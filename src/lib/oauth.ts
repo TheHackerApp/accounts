@@ -1,5 +1,5 @@
 interface RequestOptions {
-  fetch: typeof fetch;
+  session?: string;
 }
 
 /**
@@ -20,12 +20,15 @@ interface CompleteRegistrationResponse {
  * Complete a user's registration process
  */
 export async function completeRegistration({
-  fetch,
+  session,
   ...body
 }: CompleteRegistrationOptions): Promise<CompleteRegistrationResponse> {
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/oauth/complete-registration', {
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  if (session) headers.set('Cookie', `session=${session}`);
+
+  const response = await fetch(apiUrl('/oauth/complete-registration'), {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     credentials: 'include',
     body: JSON.stringify(body),
   });
@@ -34,3 +37,9 @@ export async function completeRegistration({
 
   return data;
 }
+
+/**
+ * Select the correct API URL to use based on execution environment (SSR vs CSR)
+ */
+const apiUrl = (path: string): string =>
+  (typeof window === 'undefined' ? process.env.API_UPSTREAM : process.env.NEXT_PUBLIC_API_URL) + path;
