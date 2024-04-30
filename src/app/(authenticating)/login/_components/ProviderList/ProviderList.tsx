@@ -1,6 +1,6 @@
 'use client';
 
-import LaunchLink from './LaunchLink';
+import LaunchLink from './_components/LaunchLink';
 import { useProvidersSuspenseQuery } from './Providers.graphql';
 
 const ProviderList = () => {
