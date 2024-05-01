@@ -4,11 +4,12 @@ import { useFormState } from 'react-dom';
 import toast from 'react-hot-toast';
 
 import type { Action, ActionState } from '@/components/form';
-import type { Profile } from '@/lib/user';
+import { Profile } from '@/lib/user';
 
 import { schema } from './schema';
 import { UpdateProfileDocument } from './UpdateProfile.graphql';
 
+// TODO: evaluate moving to server for cache invalidation
 const action =
   (userId: number, client: ApolloClient<object>): Action<typeof schema> =>
   async (_previous, formData) => {

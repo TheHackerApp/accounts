@@ -1,4 +1,5 @@
-import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc';
 import { cookies, headers } from 'next/headers';
 
@@ -15,11 +16,20 @@ function makeClient(): ApolloClient<NormalizedCacheObject> {
   if (domain === null) throw new Error('request must have a "host" header');
 
   const authentication = createAuthenticationLink(session?.value, domain!);
+  const requestTagger = createRequestTaggerLink();
   const http = new HttpLink({ uri: process.env.API_UPSTREAM + '/graphql' });
-  const link = authentication.concat(defaultLinkMiddleware()).concat(http);
+  const link = ApolloLink.from([authentication, requestTagger, defaultLinkMiddleware(), http]);
 
   return new ApolloClient({
     cache: new InMemoryCache(),
     link,
   });
 }
+
+const createRequestTaggerLink = (): ApolloLink =>
+  setContext((_request, { tag = undefined }) => {
+    console.log('request tag', tag);
+    if (tag === undefined) return {};
+
+    return { fetchOptions: { next: { tags: [tag] } } };
+  });

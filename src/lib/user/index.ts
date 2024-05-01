@@ -9,6 +9,6 @@ export type Profile = Omit<User, '__typename' | 'events' | 'identities' | 'organ
  * Get the current user's profile details
  */
 export async function getCurrentUser(): Promise<Profile> {
-  const { data } = await getClient().query({ query: ProfileDocument });
+  const { data } = await getClient().query({ query: ProfileDocument, context: { tag: 'currentUser' } });
   return data.me;
 }
