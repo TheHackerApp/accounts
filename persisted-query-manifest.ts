@@ -4,7 +4,7 @@ import { PersistedQueryManifestConfig } from '@apollo/generate-persisted-query-m
 import { typenameTransformer } from './src/graphql/transform';
 
 const config: PersistedQueryManifestConfig = {
-  documents: ['src/app/**/*.graphql'],
+  documents: ['src/**/*.graphql'],
   output: process.env.OUTPUT_PATH ?? './persisted-query-manifest.json',
   documentTransform: new DocumentTransform(typenameTransformer),
 };
