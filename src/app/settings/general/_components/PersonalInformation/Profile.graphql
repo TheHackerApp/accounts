@@ -1,0 +1,12 @@
+query Profile {
+  me {
+    id
+    familyName
+    givenName
+    identities {
+      email
+      provider
+    }
+    primaryEmail
+  }
+}
