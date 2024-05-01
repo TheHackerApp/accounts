@@ -17,7 +17,7 @@ const INTERNAL_SERVER_ERROR = `
 `;
 
 export const config: MiddlewareConfig = {
-  matcher: '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  matcher: '/((?!api|dev|_next/static|_next/image|favicon.ico).*)',
 };
 
 export async function middleware(request: NextRequest): Promise<NextResponse | undefined> {

@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 
-const UPSTREAM_URL = new URL(process.env.API_UPSTREAM as string);
+const UPSTREAM_URL = new URL(process.env.API_UPSTREAM + '/graphql');
 
 async function proxyRequest(request: Request): Promise<Response> {
   if (process.env.NODE_ENV !== 'development') notFound();
