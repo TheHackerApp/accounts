@@ -2,8 +2,10 @@
 
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tooltip } from '@nextui-org/react';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
 
 import { cn } from '@/lib/styles';
 
@@ -14,11 +16,24 @@ interface Props {
   to: string;
   title: string;
   icon: IconDefinition;
+  disabled?: boolean;
 }
 
-const NavigationItem = ({ to, title, icon }: Props): ReactNode => {
+const NavigationItem = ({ to, title, icon, disabled }: Props): ReactNode => {
+  const isLargeScreen = useMediaQuery('(min-width: 1024px)');
   const path = usePathname();
   const active = to === path;
+
+  if (disabled) {
+    return (
+      <span className={cn('text-content4', LINK_STYLES)}>
+        <FontAwesomeIcon icon={icon} className={cn('text-content4', ICON_STYLES)} />
+        <Tooltip content="Coming soon..." placement={isLargeScreen ? 'right' : 'bottom'} color="secondary" showArrow>
+          {title}
+        </Tooltip>
+      </span>
+    );
+  }
 
   if (active) {
     return (

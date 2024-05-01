@@ -13,8 +13,8 @@ export default function Layout({ children }: PropsWithChildren): ReactNode {
       <div className="px-4 py-5 sm:p-6 lg:flex">
         <Navigation>
           <NavigationItem to="/settings/general" title="General" icon={faUser} />
-          <NavigationItem to="/settings/authetnication" title="Sign-in methods" icon={faFingerprint} />
-          <NavigationItem to="/settings/notifications" title="Notifications" icon={faEnvelope} />
+          <NavigationItem to="/settings/authetnication" title="Sign-in methods" icon={faFingerprint} disabled />
+          <NavigationItem to="/settings/notifications" title="Notifications" icon={faEnvelope} disabled />
         </Navigation>
 
         <div className="divide-y divide-divider">{children}</div>
