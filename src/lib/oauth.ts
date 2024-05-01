@@ -2,6 +2,8 @@ interface RequestOptions {
   session?: string;
 }
 
+export const LOGOUT_URL = `${process.env.NEXT_PUBLIC_API_URL}/oauth/logout`;
+
 /**
  * Create the URL to initiate the OAuth flow
  */
