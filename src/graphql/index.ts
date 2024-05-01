@@ -1,4 +1,3 @@
-export { ApolloClientProvider } from './provider';
 export type {
   CustomDomain,
   Event,
