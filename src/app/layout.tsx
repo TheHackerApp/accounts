@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import NextUIProvider from '@/components/NextUIProvider';
 import { ApolloClientProvider } from '@/graphql';
@@ -29,7 +30,10 @@ export default function RootLayout({ children }: Props) {
       <body className={cn(inter.className, 'h-dvh')}>
         <ApolloClientProvider>
           <NextUIProvider>
-            <ThemeProvider attribute="class">{children}</ThemeProvider>
+            <ThemeProvider attribute="class">
+              {children}
+              <Toaster position="top-right" toastOptions={{ className: 'toast' }} />
+            </ThemeProvider>
           </NextUIProvider>
         </ApolloClientProvider>
       </body>

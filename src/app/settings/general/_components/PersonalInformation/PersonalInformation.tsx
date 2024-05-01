@@ -4,6 +4,7 @@ import { ApolloClient, useApolloClient } from '@apollo/client';
 import { Link } from '@nextui-org/react';
 import { ReactNode, useMemo } from 'react';
 import { useFormState } from 'react-dom';
+import toast from 'react-hot-toast';
 
 import { SelectField, Submit, TextField, useForm } from '@/components/form';
 import type { Action } from '@/components/form';
@@ -22,15 +23,12 @@ const action =
       mutation: UpdateProfileDocument,
       variables: { input: { id: userId, ...result.data } },
     });
-    if (data === null || data === undefined || errors != undefined) {
-      // TODO: handle graphql errors
-      console.log(errors);
-      return;
-    }
+    if (data === null || data === undefined || errors != undefined) return;
+
     const { userErrors } = data.updateUser;
     if (userErrors.length !== 0) return userErrors;
 
-    // TODO: notify success
+    toast.success('Profile updated!', { duration: 30 * 1000 });
   };
 
 const PersonalInformation = (): ReactNode => {

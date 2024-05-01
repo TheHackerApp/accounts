@@ -20,13 +20,20 @@ async function proxyRequest(request: Request): Promise<Response> {
   url.host = UPSTREAM_URL.host;
   url.pathname = UPSTREAM_URL.pathname;
 
-  const response = await fetch(url, {
-    method: request.method,
-    body: request.body,
-    headers,
-    // @ts-expect-error duplex is needed to make proxying response bodies work, but it is not part of the type
-    duplex: 'half',
-  });
+  return new Response(JSON.stringify({ errors: [{ message: 'fetch failed' }] }));
+
+  let response;
+  try {
+    response = await fetch(url, {
+      method: request.method,
+      body: request.body,
+      headers,
+      // @ts-expect-error duplex is needed to make proxying response bodies work, but it is not part of the type
+      duplex: 'half',
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ errors: [{ message: 'fetch failed' }] }));
+  }
 
   const responseHeaders = new Headers(response.headers);
   responseHeaders.delete('content-encoding');

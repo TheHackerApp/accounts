@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.toast {
+  @apply bg-content2 text-foreground !important;
+}

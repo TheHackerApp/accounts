@@ -1,4 +1,4 @@
-import { ApolloLink, HttpLink, NormalizedCacheObject } from '@apollo/client';
+import { ApolloLink, HttpLink, NormalizedCacheObject, Operation } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
@@ -9,6 +9,7 @@ import {
   SSRMultipartLink,
 } from '@apollo/experimental-nextjs-app-support/ssr';
 import { generatePersistedQueryIdsFromManifest } from '@apollo/persisted-query-lists';
+import toast from 'react-hot-toast';
 
 import { uncloakSsrOnly } from '@/lib/ssr-secret';
 
@@ -28,17 +29,25 @@ function defaultLinkMiddleware(): ApolloLink {
       loadManifest: () => import('@/graphql/persisted-query-manifest.json'),
     }),
   );
-  const errorHandler = onError(({ graphQLErrors, networkError }) => {
+  const errorHandler = onError(({ operation, graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       for (const { message, locations, path } of graphQLErrors) {
-        console.log(`[GraphQL error]: ${message} at ${path} in ${locations} query`);
+        let formatted = message;
+        if (path) formatted += ` at ${path}`;
+        if (locations) formatted += ` in ${locations} query`;
+        logError(operation, 'GraphQL', formatted);
       }
     }
-    if (networkError) console.error(`[Network error]: ${networkError}`);
+    if (networkError) logError(operation, 'Network', networkError.toString());
+
+    if (typeof window !== 'undefined') toast.error('Operation failed. Please try again later.');
   });
 
   return ApolloLink.from([errorHandler, persistedQueries, retry]);
 }
+
+const logError = (operation: Operation, kind: string, message: string): void =>
+  console.log(`[${kind} error][operation: ${operation.operationName}]: ${message}`);
 
 interface ClientCreatorInput {
   token: Promise<string | undefined>;
