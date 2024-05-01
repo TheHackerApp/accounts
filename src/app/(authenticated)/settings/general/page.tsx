@@ -1,18 +1,18 @@
 import { Button } from '@nextui-org/react';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 
 import Section from '@/app/(authenticated)/settings/_components/Section';
-import Spinner from '@/components/Spinner';
+import { getCurrentUser } from '@/lib/user';
 
 import PersonalInformation from './_components/PersonalInformation';
 
-export default function General(): ReactNode {
+export default async function General(): Promise<ReactNode> {
+  const currentUser = await getCurrentUser();
+
   return (
     <>
       <Section title="Personal Information" description="Change your name, profile picture, and primary email.">
-        <Suspense fallback={<Spinner />}>
-          <PersonalInformation />
-        </Suspense>
+        <PersonalInformation profile={currentUser} />
       </Section>
       <Section
         title="Delete account"

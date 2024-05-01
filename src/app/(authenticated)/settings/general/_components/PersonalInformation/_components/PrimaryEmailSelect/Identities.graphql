@@ -1,12 +1,9 @@
-query Profile {
+query Identities {
   me {
     id
-    familyName
-    givenName
     identities {
       email
       provider
     }
-    primaryEmail
   }
 }

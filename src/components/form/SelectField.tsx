@@ -22,6 +22,7 @@ const SelectField = <TFieldValues extends FieldValues, TPath extends FieldPathBy
   control,
   required,
   options: optionsIter,
+  isDisabled,
   ...rest
 }: Props<TFieldValues, TPath>): ReactNode => {
   const {
@@ -35,7 +36,7 @@ const SelectField = <TFieldValues extends FieldValues, TPath extends FieldPathBy
   return (
     <Select
       {...rest}
-      isDisabled={pending}
+      isDisabled={pending || isDisabled}
       isRequired={required}
       isInvalid={invalid}
       errorMessage={error?.message}

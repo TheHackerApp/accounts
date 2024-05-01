@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import NextUIProvider from '@/components/NextUIProvider';
-import { ApolloClientProvider } from '@/graphql';
+import { ApolloClientProvider } from '@/graphql/clients/provider';
 import { cn } from '@/lib/styles';
 
 import '@fortawesome/fontawesome-svg-core/styles.css';
