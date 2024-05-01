@@ -7,7 +7,19 @@ const config = {
     extend: {},
   },
   darkMode: 'class',
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            background: {
+              DEFAULT: 'hsl(0 0% 95%)',
+            },
+          },
+        },
+      },
+    }),
+  ],
 };
 
 export default config;
