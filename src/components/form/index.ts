@@ -3,9 +3,12 @@
 import type { FieldErrors } from 'react-hook-form';
 import type { AnyZodObject, TypeOf, ZodError } from 'zod';
 
+import type { UserError } from '@/graphql/types';
+
 export type ActionState<TSchema extends AnyZodObject> =
   | ZodError<TypeOf<TSchema>>
   | FieldErrors<TypeOf<TSchema>>
+  | UserError[]
   | undefined;
 export type Action<TSchema extends AnyZodObject> = (
   previousState: ActionState<TSchema>,

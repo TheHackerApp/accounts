@@ -28,10 +28,7 @@ const action =
       return;
     }
     const { userErrors } = data.updateUser;
-    if (userErrors !== undefined) {
-      // TODO: transform user errors into form errors
-      return;
-    }
+    if (userErrors.length !== 0) return userErrors;
 
     // TODO: notify success
   };
