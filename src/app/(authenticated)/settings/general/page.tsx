@@ -1,7 +1,7 @@
 import { Button } from '@nextui-org/react';
 import { ReactNode, Suspense } from 'react';
 
-import Section from '@/app/settings/_components/Section';
+import Section from '@/app/(authenticated)/settings/_components/Section';
 import Spinner from '@/components/Spinner';
 
 import PersonalInformation from './_components/PersonalInformation';
