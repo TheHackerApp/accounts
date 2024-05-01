@@ -20,8 +20,6 @@ async function proxyRequest(request: Request): Promise<Response> {
   url.host = UPSTREAM_URL.host;
   url.pathname = UPSTREAM_URL.pathname;
 
-  return new Response(JSON.stringify({ errors: [{ message: 'fetch failed' }] }));
-
   let response;
   try {
     response = await fetch(url, {
