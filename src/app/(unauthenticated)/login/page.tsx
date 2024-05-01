@@ -4,6 +4,10 @@ import Spinner from '@/components/Spinner';
 
 import ProviderList from './_components/ProviderList';
 
+export const metadata = {
+  title: 'Sign in - The Hacker App',
+};
+
 export default function Login(): ReactNode {
   return (
     <>

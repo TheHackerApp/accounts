@@ -2,6 +2,10 @@ import { ReactNode } from 'react';
 
 import Form from './_components/Form';
 
+export const metadata = {
+  title: 'Sign up - The Hacker App',
+};
+
 export default function CompleteProfile(): ReactNode {
   return (
     <>
