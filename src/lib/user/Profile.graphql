@@ -1,0 +1,11 @@
+query Profile {
+  me {
+    id
+    familyName
+    givenName
+    isAdmin
+    primaryEmail
+    createdAt
+    updatedAt
+  }
+}
