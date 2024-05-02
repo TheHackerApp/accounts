@@ -28,7 +28,6 @@ function makeClient(): ApolloClient<NormalizedCacheObject> {
 
 const createRequestTaggerLink = (): ApolloLink =>
   setContext((_request, { tag = undefined }) => {
-    console.log('request tag', tag);
     if (tag === undefined) return {};
 
     return { fetchOptions: { next: { tags: [tag] } } };
