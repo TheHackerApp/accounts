@@ -1,4 +1,12 @@
-import { ApolloLink, Operation } from '@apollo/client';
+import {
+  ApolloCache,
+  ApolloLink,
+  InMemoryCache,
+  InMemoryCacheConfig,
+  NormalizedCacheObject,
+  Operation,
+  TypePolicies,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
@@ -57,3 +65,18 @@ export const createAuthenticationLink = (token: MaybeToken | Promise<MaybeToken>
 
     return { headers };
   });
+
+const TYPE_POLICIES: TypePolicies = {
+  CustomDomain: { keyFields: ['name'] },
+  Event: { keyFields: ['slug'] },
+  Identity: { keyFields: ['provider'] },
+  Provider: { keyFields: ['slug'] },
+};
+
+/**
+ * Create a cache with standard configuration
+ */
+export const createCache = (
+  implementation: typeof InMemoryCache,
+  config?: Omit<InMemoryCacheConfig, 'typePolicies'>,
+): ApolloCache<NormalizedCacheObject> => new implementation({ ...config, typePolicies: TYPE_POLICIES });

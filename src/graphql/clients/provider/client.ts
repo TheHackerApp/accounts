@@ -7,7 +7,7 @@ import {
 
 import { uncloakSsrOnly } from '@/lib/ssr-secret';
 
-import { createAuthenticationLink, defaultLinkMiddleware } from '../shared';
+import { createAuthenticationLink, createCache, defaultLinkMiddleware } from '../shared';
 
 interface ClientCreatorInput {
   token: Promise<string | undefined>;
@@ -24,7 +24,7 @@ export function makeCsrClient(_input: ClientCreatorInput): NextSSRApolloClient<N
   const link = defaultLinkMiddleware().concat(http);
 
   return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+    cache: createCache(NextSSRInMemoryCache),
     link,
   });
 }
@@ -45,7 +45,7 @@ export function makeSsrClient({
   const link = ApolloLink.from([authentication, ssr, defaultLinkMiddleware(), http]);
 
   return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
+    cache: createCache(NextSSRInMemoryCache),
     link,
   });
 }

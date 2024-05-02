@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc';
 import { cookies, headers } from 'next/headers';
 
-import { createAuthenticationLink, defaultLinkMiddleware } from '@/graphql/clients/shared';
+import { createAuthenticationLink, createCache, defaultLinkMiddleware } from '@/graphql/clients/shared';
 
 export const { getClient } = registerApolloClient(makeClient);
 
@@ -21,7 +21,7 @@ function makeClient(): ApolloClient<NormalizedCacheObject> {
   const link = ApolloLink.from([authentication, requestTagger, defaultLinkMiddleware(), http]);
 
   return new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: createCache(InMemoryCache),
     link,
   });
 }
