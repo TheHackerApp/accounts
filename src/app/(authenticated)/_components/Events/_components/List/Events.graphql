@@ -1,0 +1,12 @@
+query Events {
+  me {
+    id
+    events {
+      event {
+        slug
+        active
+        name
+      }
+    }
+  }
+}
