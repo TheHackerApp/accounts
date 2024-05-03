@@ -8,7 +8,7 @@ export default function Events(): ReactNode {
   return (
     <section className="space-y-4 px-4 py-5 sm:p-6">
       {/* TODO: add button for creating new organization */}
-      <h2 className="text-xl font-semibold leading-6 tracking-wide">Your events</h2>
+      <h2 className="text-xl font-semibold leading-6 tracking-wide">Events you&apos;re participating in</h2>
       <Suspense fallback={<Spinner />}>
         <List />
       </Suspense>
