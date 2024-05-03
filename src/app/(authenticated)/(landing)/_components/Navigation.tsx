@@ -9,11 +9,11 @@ const Navigation = (): ReactNode => {
 
   return (
     <ButtonGroup>
-      <Button as={Link} href="/events" isDisabled={pathname === '/events'}>
-        Events
-      </Button>
       <Button as={Link} href="/organizations" isDisabled={pathname === '/organizations'}>
         Organizations
+      </Button>
+      <Button as={Link} href="/events" isDisabled={pathname === '/events'}>
+        Events
       </Button>
     </ButtonGroup>
   );

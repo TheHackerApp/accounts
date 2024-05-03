@@ -12,7 +12,7 @@ const nextConfig = {
     // TODO: replace redirect with server function based on user's preference
     {
       source: '/',
-      destination: '/events',
+      destination: '/organizations',
       permanent: false,
     },
     {
