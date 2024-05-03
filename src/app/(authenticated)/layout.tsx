@@ -1,5 +1,9 @@
 import { PropsWithChildren, ReactNode } from 'react';
 
+export const metadata = {
+  title: 'The Hacker App',
+};
+
 export default function Layout({ children }: PropsWithChildren): ReactNode {
   return (
     <div className="flex h-screen justify-center items-center">
