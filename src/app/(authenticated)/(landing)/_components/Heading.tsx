@@ -6,9 +6,12 @@ import { ReactNode } from 'react';
 
 import { LOGOUT_URL } from '@/lib/oauth';
 
+import Navigation from './Navigation';
+
 const Heading = (): ReactNode => (
-  <div className="flex justify-between items-center space-x-3 px-4 py-5 sm:p-6">
+  <div className="flex flex-col sm:flex-row justify-between items-center space-x-3 space-y-2 px-4 py-5 sm:p-6">
     <h1 className="text-2xl font-semibold leading-6 tracking-wide">The Hacker App</h1>
+    <Navigation />
     <div className="space-x-2.5">
       <HeadingLink title="Settings" href="/settings" icon={faSliders} />
       <HeadingLink title="Log out" href={LOGOUT_URL} icon={faArrowRightFromBracket} />

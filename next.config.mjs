@@ -9,6 +9,12 @@ const nextConfig = {
     ],
   },
   redirects: async () => [
+    // TODO: replace redirect with server function based on user's preference
+    {
+      source: '/',
+      destination: '/events',
+      permanent: false,
+    },
     {
       source: '/settings',
       destination: '/settings/general',

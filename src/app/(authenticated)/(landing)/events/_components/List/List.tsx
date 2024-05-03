@@ -8,7 +8,7 @@ import EmptyState from '@/components/EmptyState';
 import Event from './_components/Event';
 import { useEventsSuspenseQuery } from './Events.graphql';
 
-const Events = (): ReactNode => {
+const List = (): ReactNode => {
   const { data } = useEventsSuspenseQuery();
 
   const events = data.me.events.map((e) => e.event);
@@ -22,7 +22,7 @@ const Events = (): ReactNode => {
     );
 
   return (
-    <ul className="max-h-60 overflow-y-scroll divide-y divide-divider" role="list">
+    <ul className="divide-y divide-divider" role="list">
       {events.map((e) => (
         <Event key={e.slug} {...e} />
       ))}
@@ -30,4 +30,4 @@ const Events = (): ReactNode => {
   );
 };
 
-export default Events;
+export default List;
