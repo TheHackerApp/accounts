@@ -1,16 +1,33 @@
-import { ReactNode, Suspense } from 'react';
+'use client';
 
-import Spinner from '@/components/Spinner';
+import { faCalendarXmark } from '@fortawesome/pro-duotone-svg-icons';
+import { ReactNode } from 'react';
 
-import List from './_components/List';
+import EmptyState from '@/components/EmptyState';
 
-const Events = (): ReactNode => (
-  <section className="space-y-2 px-4 py-5 sm:p-6">
-    <h2 className="text-xl font-semibold leading-6 tracking-wide">Your Events</h2>
-    <Suspense fallback={<Spinner />}>
-      <List />
-    </Suspense>
-  </section>
-);
+import Event from './_components/Event';
+import { useEventsSuspenseQuery } from './Events.graphql';
+
+const Events = (): ReactNode => {
+  const { data } = useEventsSuspenseQuery();
+
+  const events = data.me.events.map((e) => e.event);
+  if (events.length === 0)
+    return (
+      <EmptyState
+        icon={faCalendarXmark}
+        title="You're not in any events!"
+        description="It doesn't look like you're participating in any events. Time to go find one!"
+      />
+    );
+
+  return (
+    <ul className="max-h-60 overflow-y-scroll divide-y divide-divider" role="list">
+      {events.map((e) => (
+        <Event key={e.slug} {...e} />
+      ))}
+    </ul>
+  );
+};
 
 export default Events;
