@@ -1,0 +1,10 @@
+query OrganizationEvents($organizationId: Int!) {
+  organization(id: $organizationId) {
+    id
+    events {
+      slug
+      active
+      name
+    }
+  }
+}

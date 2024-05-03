@@ -1,11 +1,2 @@
-export type {
-  CustomDomain,
-  Event,
-  Identity,
-  Organization,
-  Organizer,
-  Participant,
-  Provider,
-  Role,
-  User,
-} from './types';
+export type { CustomDomain, Event, Identity, Organization, Organizer, Participant, Provider, User } from './types';
+export { Role } from './types';

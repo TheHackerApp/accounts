@@ -7,14 +7,14 @@ import { Event as EventType } from '@/graphql';
 
 type Props = Pick<EventType, 'slug' | 'active' | 'name'>;
 
-const Event = (event: Props): ReactNode => (
-  <li className="relative flex justify-between rounded-small gap-x-6 px-4 py-5 sm:px-6 lg:px-8 hover:bg-content2">
+const Event = ({ slug, name }: Props): ReactNode => (
+  <li className="relative flex justify-between rounded-small gap-x-6 px-4 py-3 sm:px-4 lg:px-6 hover:bg-content2">
     <div className="flex min-w-0 gap-x-4">
       {/* TODO: add logo from API */}
       <Image
         className="h-12 w-12 flex-none rounded-small bg-background"
         src="https://placehold.co/256.png"
-        alt={event.name + "'s logo"}
+        alt={name + "'s logo"}
         width={256}
         height={256}
       />
@@ -22,9 +22,9 @@ const Event = (event: Props): ReactNode => (
         <p className="text-sm font-semibold leading-6">
           {/* TODO: disable when no longer active */}
           {/* TODO: handle custom domains */}
-          <a href={`http://${event.slug}.myhacker.localhost`}>
+          <a href={`http://${slug}.myhacker.localhost`}>
             <span className="absolute inset-x-0 -top-px bottom-0"></span>
-            {event.name}
+            {name}
           </a>
         </p>
       </div>

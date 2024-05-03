@@ -1,0 +1,13 @@
+query Organizations {
+  me {
+    id
+    organizations {
+      organization {
+        id
+        logo
+        name
+      }
+      role
+    }
+  }
+}

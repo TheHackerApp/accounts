@@ -7,7 +7,7 @@ interface Props {
 }
 
 const ListSection = ({ title, children }: PropsWithChildren<Props>): ReactNode => (
-  <section className="space-y-2 px-4 py-5 sm:p-6">
+  <section className="space-y-4 px-4 py-5 sm:p-6">
     <h2 className="text-xl font-semibold leading-6 tracking-wide">{title}</h2>
     <Suspense fallback={<Spinner />}>{children}</Suspense>
   </section>
