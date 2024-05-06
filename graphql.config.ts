@@ -1,12 +1,35 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
-import type { GraphQLConfig } from 'graphql-config';
+import type { IGraphQLProject, SchemaPointer } from 'graphql-config';
 
 import 'dotenv/config';
 
 import { typenameTransformer } from './src/graphql/transform';
 
-const SCHEMA_SOURCE = process.env.GRAPHQL_SCHEMA_SOURCE;
-if (SCHEMA_SOURCE === undefined) throw new Error('Unknown schema source. Is GRAPHQL_SCHEMA_SOURCE set?');
+function resolveSource(): SchemaPointer {
+  const SCHEMA_SOURCE = process.env.GRAPHQL_SCHEMA_SOURCE;
+  if (SCHEMA_SOURCE === undefined) throw new Error('Unknown schema source. Is GRAPHQL_SCHEMA_SOURCE set?');
+
+  try {
+    const url = new URL(SCHEMA_SOURCE);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return SCHEMA_SOURCE;
+  } catch {
+    return SCHEMA_SOURCE;
+  }
+
+  const headers = Object.fromEntries(
+    (process.env.GRAPHQL_SCHEMA_HEADERS || '')
+      .trim()
+      .split(',')
+      .map((header) => header.split('=', 2))
+      .filter((header) => header.length === 2 && header.every((part) => part.length > 0)),
+  );
+
+  const isSdl = (process.env.GRAPHQL_SCHEMA_IS_SDL || 'false').toLowerCase().trim();
+  const handleAsSDL = isSdl === 'true' || isSdl === 't' || isSdl === '1';
+
+  // @ts-expect-error handleAsSDL is not defined for the generic graphql config, but is for GraphQL codegen
+  return { [SCHEMA_SOURCE]: { headers, handleAsSDL } };
+}
 
 const codegen: CodegenConfig = {
   config: {
@@ -55,10 +78,9 @@ const codegen: CodegenConfig = {
   ignoreNoDocuments: true,
 };
 
-const config: GraphQLConfig = {
-  schema: SCHEMA_SOURCE,
+const config: IGraphQLProject = {
+  schema: resolveSource(),
   documents: ['src/**/*.graphql'],
-  // @ts-expect-error 2353
   extensions: { codegen },
 };
 
