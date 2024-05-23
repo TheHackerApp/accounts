@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { exec } = require('node:child_process');
 const fs = require('node:fs/promises');
+const { promisify } = require('util');
+const exec = promisify(require('node:child_process').exec);
 
 const tempy = import('tempy');
 
@@ -8,22 +9,12 @@ const tempy = import('tempy');
 const plugin = async () => {
   const { temporaryFileTask } = await tempy;
   return temporaryFileTask(async (path) => {
-    // eslint-disable-next-line no-undef
-    await new Promise((resolve, reject) =>
-      exec(
-        'pnpm persisted-queries',
-        {
-          env: {
-            PATH: process.env.PATH,
-            OUTPUT_PATH: path,
-          },
-        },
-        (error) => {
-          if (error) reject(error);
-          else resolve();
-        },
-      ),
-    );
+    await exec('pnpm persisted-queries', {
+      env: {
+        PATH: process.env.PATH,
+        OUTPUT_PATH: path,
+      },
+    });
 
     return fs.readFile(path, 'utf8');
   });
