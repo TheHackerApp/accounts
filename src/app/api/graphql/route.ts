@@ -1,20 +1,18 @@
-import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
+import cookie from 'cookie';
+
+export const runtime = 'edge';
 
 const UPSTREAM_URL = new URL(process.env.API_UPSTREAM + '/graphql');
 
-async function proxyRequest(request: Request): Promise<Response> {
-  if (process.env.NODE_ENV !== 'development') notFound();
-
-  const cookieJar = cookies();
-  const token = cookieJar.get('session');
+async function processRequest(request: Request): Promise<Response> {
+  const cookies = cookie.parse(request.headers.get('cookie') || '');
 
   const headers = new Headers({
     'Event-Domain': request.headers.get('host') as string,
     'Accept-Encoding': request.headers.get('accept-encoding') ?? 'identity',
     'Content-Type': request.headers.get('content-type') ?? 'application/json',
   });
-  if (token) headers.set('Authorization', `Bearer ${token.value}`);
+  if (cookies.session) headers.set('Authorization', `Bearer ${cookies.session}`);
 
   const url = new URL(request.url);
   url.host = UPSTREAM_URL.host;
@@ -39,10 +37,5 @@ async function proxyRequest(request: Request): Promise<Response> {
   return new Response(response.body, { headers: responseHeaders });
 }
 
-export async function GET(request: Request): Promise<Response> {
-  return proxyRequest(request);
-}
-
-export async function POST(request: Request): Promise<Response> {
-  return proxyRequest(request);
-}
+export const GET = processRequest;
+export const POST = processRequest;
