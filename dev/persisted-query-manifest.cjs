@@ -1,23 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('node:fs/promises');
-const { promisify } = require('util');
-const exec = promisify(require('node:child_process').exec);
-
-const tempy = import('tempy');
+const { generatePersistedQueryManifest } = require('@apollo/generate-persisted-query-manifest');
 
 /** @type {import('@graphql-codegen/plugin-helpers').PluginFunction} */
 const plugin = async () => {
-  const { temporaryFileTask } = await tempy;
-  return temporaryFileTask(async (path) => {
-    await exec('pnpm persisted-queries', {
-      env: {
-        PATH: process.env.PATH,
-        OUTPUT_PATH: path,
-      },
-    });
-
-    return fs.readFile(path, 'utf8');
-  });
+  const manifest = await generatePersistedQueryManifest(
+    { documents: ['src/**/*.graphql'] },
+    'persisted-query-manifest.ts',
+  );
+  return JSON.stringify(manifest, null, 2);
 };
 
 module.exports = { plugin };
