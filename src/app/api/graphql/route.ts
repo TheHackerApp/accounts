@@ -1,18 +1,19 @@
-import cookie from 'cookie';
+import { cookies as requestCookies } from 'next/headers';
 
 export const runtime = 'edge';
 
 const UPSTREAM_URL = new URL(process.env.API_UPSTREAM + '/graphql');
 
 async function processRequest(request: Request): Promise<Response> {
-  const cookies = cookie.parse(request.headers.get('cookie') || '');
+  const cookies = requestCookies();
+  const session = cookies.get('session');
 
   const headers = new Headers({
     'Event-Domain': request.headers.get('host') as string,
     'Accept-Encoding': request.headers.get('accept-encoding') ?? 'identity',
     'Content-Type': request.headers.get('content-type') ?? 'application/json',
   });
-  if (cookies.session) headers.set('Authorization', `Bearer ${cookies.session}`);
+  if (session !== undefined) headers.set('Authorization', `Bearer ${session.value}`);
 
   const url = new URL(request.url);
   url.host = UPSTREAM_URL.host;
