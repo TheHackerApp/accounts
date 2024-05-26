@@ -26,8 +26,9 @@ export async function GET(request: Request): Promise<Response> {
   }
 
   if (context.user.type !== 'authenticated') {
-    // TODO: redirect to login
-    return Response.json({ error: 'unauthorized' }, { status: 401 });
+    const returnTo = encodeURIComponent(`${SCHEME}://${query.domain}`);
+    const host = request.headers.get('host')!;
+    return redirect(`${SCHEME}://${host}/login?return-to=${returnTo}`);
   }
   if (context.scope.kind !== 'event') return Response.json({ error: 'invalid event' }, { status: 400 });
 
@@ -35,10 +36,7 @@ export async function GET(request: Request): Promise<Response> {
   // TODO: handle users not being part of an event
 
   const payload = await generatePayload(session!.value, context.scope.event);
-  return new Response(null, {
-    status: 302,
-    headers: { Location: `${SCHEME}://${query.domain}/api/authenticate/${payload}` },
-  });
+  return redirect(`${SCHEME}://${query.domain}/api/authenticate/${payload}`);
 }
 
 async function isRequestValid(query: Record<string, string>): Promise<boolean> {
@@ -70,3 +68,5 @@ async function generatePayload(token: string, event: string): Promise<string> {
   const key = await loadKey(process.env.EVENT_SESSION_KEY);
   return encrypt(key, JSON.stringify(payload), 'base64url');
 }
+
+const redirect = (url: string, status: number = 302) => new Response(null, { status, headers: { Location: url } });
