@@ -9,7 +9,7 @@ interface Option {
 }
 
 type Props<TFieldValues extends FieldValues, TPath extends FieldPathByValue<TFieldValues, string>> = Omit<
-  SelectProps<Option | string>,
+  SelectProps<Option>,
   keyof ControllerRenderProps | 'value' | 'onSelectionChange' | 'isRequired' | 'form' | 'children' | 'items'
 > & {
   control: Control<TFieldValues>;
@@ -31,7 +31,9 @@ const SelectField = <TFieldValues extends FieldValues, TPath extends FieldPathBy
   } = useController({ name, control });
   const { pending } = useFormStatus();
 
-  const options = Array.from(optionsIter);
+  const options = Array.from(optionsIter).map((option) =>
+    typeof option === 'string' ? { label: option, value: option } : option,
+  );
 
   return (
     <Select
@@ -43,13 +45,9 @@ const SelectField = <TFieldValues extends FieldValues, TPath extends FieldPathBy
       selectedKeys={[field.value]}
       {...field}
     >
-      {options.map((option) =>
-        typeof option === 'string' ? (
-          <SelectItem key={option}>{option}</SelectItem>
-        ) : (
-          <SelectItem key={option.value}>{option.label}</SelectItem>
-        ),
-      )}
+      {options.map((option) => (
+        <SelectItem key={option.value}>{option.label}</SelectItem>
+      ))}
     </Select>
   );
 };

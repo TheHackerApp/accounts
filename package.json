@@ -24,7 +24,7 @@
     "@fortawesome/pro-duotone-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^3.4.2",
-    "@nextui-org/react": "^2.3.6",
+    "@nextui-org/react": "^2.4.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.6",
     "graphql": "^16.8.1",
