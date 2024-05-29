@@ -1,7 +1,6 @@
 'use client';
 
-import { Button, ButtonGroup } from '@nextui-org/react';
-import Link from 'next/link';
+import { Button, ButtonGroup, Link } from '@nextui-org/react';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
