@@ -37,8 +37,8 @@ export async function GET(request: Request): Promise<Response> {
   if (context.user.role === null) {
     const wasSuccessful = await addUserToEvent(context.scope.event, context.user.id);
     if (!wasSuccessful) return internalServerError(NextResponse);
-  } else if (context.user.role !== 'participant') {
-    return redirect(`${SCHEME}://${process.env.NEXT_PUBLIC_MANAGE_URL}/events/${context.scope.event}`);
+  } else if (context.user.role !== 'Participant') {
+    return redirect(`${process.env.NEXT_PUBLIC_MANAGE_URL}/events/${context.scope.event}`);
   }
 
   const payload = await generatePayload(session!.value, context.scope.event);
