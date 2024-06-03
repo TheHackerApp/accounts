@@ -38,7 +38,7 @@ export async function GET(request: Request): Promise<Response> {
     const wasSuccessful = await addUserToEvent(context.scope.event, context.user.id);
     if (!wasSuccessful) return internalServerError(NextResponse);
   } else if (context.user.role !== 'participant') {
-    // TODO: handle users being organizers for an event
+    return redirect(`${SCHEME}://${process.env.NEXT_PUBLIC_MANAGE_URL}/events/${context.scope.event}`);
   }
 
   const payload = await generatePayload(session!.value, context.scope.event);
