@@ -1,0 +1,14 @@
+mutation AddUserToEvent($input: AddUserToEventInput!) {
+  addUserToEvent(input: $input) {
+    event {
+      slug
+    }
+    user {
+      id
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
