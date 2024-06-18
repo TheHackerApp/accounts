@@ -5,6 +5,7 @@ query Events {
       event {
         slug
         active
+        domain
         name
       }
     }

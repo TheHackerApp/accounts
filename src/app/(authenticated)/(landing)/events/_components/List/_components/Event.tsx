@@ -5,7 +5,9 @@ import { ReactNode } from 'react';
 
 import { Event as EventType } from '@/graphql';
 
-type Props = Pick<EventType, 'slug' | 'active' | 'name'>;
+const SCHEME = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+
+type Props = Pick<EventType, 'slug' | 'active' | 'domain' | 'name'>;
 
 const Event = (event: Props): ReactNode => (
   <li className="relative flex justify-between rounded-small gap-x-6 px-4 py-5 sm:px-6 lg:px-8 hover:bg-content2">
@@ -21,8 +23,7 @@ const Event = (event: Props): ReactNode => (
       <div className="min-w-0 flex flex-auto items-center">
         <p className="text-sm font-semibold leading-6">
           {/* TODO: disable when no longer active */}
-          {/* TODO: handle custom domains */}
-          <a href={`http://${event.slug}.myhacker.localhost`}>
+          <a href={SCHEME + '://' + event.domain}>
             <span className="absolute inset-x-0 -top-px bottom-0"></span>
             {event.name}
           </a>
