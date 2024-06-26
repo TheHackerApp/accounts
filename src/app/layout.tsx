@@ -4,12 +4,15 @@ import { ThemeProvider } from 'next-themes';
 import { ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';
 
+import MaintenanceCard from '@/components/MaintenanceCard';
 import NextUIProvider from '@/components/NextUIProvider';
 import { ApolloClientProvider } from '@/graphql/clients/provider';
 import { cn } from '@/lib/styles';
 
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import './tailwind.css';
+
+const MAINTENANCE = (process.env.MAINTENANCE ?? '').toLowerCase().charAt(0) == 't';
 
 const inter = Inter({ subsets: ['latin'] });
 config.autoAddCss = false;
@@ -29,7 +32,7 @@ export default function RootLayout({ children }: Props) {
         <ApolloClientProvider>
           <NextUIProvider>
             <ThemeProvider attribute="class">
-              {children}
+              {MAINTENANCE ? <MaintenanceCard /> : children}
               <Toaster position="top-right" toastOptions={{ className: 'toast' }} />
             </ThemeProvider>
           </NextUIProvider>

@@ -3,11 +3,15 @@ import { MiddlewareConfig, NextRequest, NextResponse } from 'next/server';
 import { isContextSuccess, loadContext } from '@/lib/context';
 import { internalServerError } from '@/lib/errors';
 
+const MAINTENANCE = (process.env.MAINTENANCE ?? '').toLowerCase().charAt(0) == 't';
+
 export const config: MiddlewareConfig = {
   matcher: '/((?!api|dev|_next/static|_next/image|favicon.ico).*)',
 };
 
 export async function middleware(request: NextRequest): Promise<NextResponse | undefined> {
+  if (MAINTENANCE) return;
+
   const session = request.cookies.get('session');
 
   const context = await loadContext(session?.value, request.headers.get('host') as string);
